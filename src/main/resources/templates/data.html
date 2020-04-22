@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layouts/layout}"
+>
+<head>
+</head>
+<body>
+<th:block layout:fragment="content">
+
+    <div class="jumbotron">
+        <h1 class="display-4" th:text="${weather.getLocation().getName()} + ', ' + ${weather.getLocation().getCountry()}" >City name</h1>
+        <h4 th:text="'Right now, ' + ${weather.getLocation().getLocaltime()}"></h4>
+        <img th:src="${weather.getCurrent().getCondition().getIcon()}" style="max-height: 15%; max-width: 15%;">
+        <h6> Current temp (C) <span class="badge badge-secondary" th:text="${weather.getCurrent().tempC}"></span></h6>
+        <h6> Current feels like (C) <span class="badge badge-secondary" th:text="${weather.getCurrent().getFeelslikeC()}"></span></h6>
+        <h6> Current wind (KPH) <span class="badge badge-secondary" th:text="${weather.getCurrent().getWindKph()}"></span></h6>
+        <hr class="my-4">
+
+        <h3 th:text="' Forecasts for ' + ${forecasts.size()} + ' days..' ">Forecasts</h3>
+        <p>&nbsp;</p>
+
+        <div class="d-flex align-items-center">
+            <div class="container">
+                <div class="row">
+                        <tr th:each="forecast: ${forecasts}">
+                            <div class="col-sm" style="margin-bottom: 1rem;">
+                                <div class="card" style="width: 18rem;">
+                            <div class="card-footer">
+                                <small class="text-muted" th:text="${forecast.getDate()}"></small>
+                            </div>
+                            <div class="col-xs-1" align="center">
+                                <img th:src="${forecast.getDay().getCondition().getIcon()}" class="card-img-top" alt="..." style="max-height: 45%; max-width: 45%;">
+
+                                <div class="card-body">
+                                    <h5 class="card-title" th:text="${forecast.getDay().getCondition().getText()}">Weather</h5>
+
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-sm">
+                                                <h5> Max temp <span class="badge badge-secondary" th:text="${forecast.getDay().getMaxtempC()} + ' (C)'"></span></h5>
+                                            </div>
+                                            <div class="col-sm">
+                                                <h5> Min temp <span class="badge badge-secondary" th:text="${forecast.getDay().getMintempC()} + ' (C)'"></span></h5>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-sm">
+                                                <h5> Av. temp <span class="badge badge-secondary" th:text="${forecast.getDay().getAvgtempC()} + ' (C)'"></span></h5>
+                                            </div>
+                                            <div class="col-sm">
+                                                <h5> Max wind <span class="badge badge-secondary" th:text="${forecast.getDay().getMaxwindKph()} + ' (KPH)'"></span></h5>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-sm">
+                                                <h5> Sunrise <span class="badge badge-secondary" th:text="${forecast.getAstro().getSunrise()}"></span></h5>
+                                            </div>
+                                            <div class="col-sm">
+                                                <h5> Sunset <span class="badge badge-secondary" th:text="${forecast.getAstro().getSunset()}"></span></h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                            </div>
+                        </tr>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</th:block>
+
+</body>
+</html>
